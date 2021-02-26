@@ -307,8 +307,10 @@ class Room extends EventEmitter
 		// Store the Broadcaster into the map.
 		this._broadcasters.set(broadcaster.id, broadcaster);
 
+		const joinedPeers = this._getJoinedPeers();
+
 		// Notify the new Broadcaster to all Peers.
-		for (const otherPeer of this._getJoinedPeers())
+		for (const otherPeer of joinedPeers)
 		{
 			otherPeer.notify(
 				'newPeer',
@@ -322,7 +324,6 @@ class Room extends EventEmitter
 
 		// Reply with the list of Peers and their Producers.
 		const peerInfos = [];
-		const joinedPeers = this._getJoinedPeers();
 
 		// Just fill the list of Peers if the Broadcaster provided its rtpCapabilities.
 		if (rtpCapabilities)
